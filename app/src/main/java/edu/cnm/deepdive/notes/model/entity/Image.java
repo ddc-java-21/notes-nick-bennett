@@ -5,6 +5,13 @@ import java.time.Instant;
 
 public class Image {
 
+  /*
+  C - Attach an image to a note
+  R - Retrieve all images for a note
+  U - Maybe update caption
+  D - Remove image from note
+   */
+
   private long id;
   private String caption;
   private String mimeType;
