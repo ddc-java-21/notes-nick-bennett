@@ -1,8 +1,23 @@
 package edu.cnm.deepdive.notes.model.entity;
 
 import android.net.Uri;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 import java.time.Instant;
 
+@Entity(
+    tableName = "image",
+    foreignKeys = {
+        @ForeignKey(
+            entity = Note.class,
+            parentColumns = "note_id",
+            childColumns = "note_id",
+            onDelete = ForeignKey.CASCADE
+        )
+    }
+)
 public class Image {
 
   /*
@@ -12,11 +27,22 @@ public class Image {
   D - Remove image from note
    */
 
+  @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "image_id")
   private long id;
+
+  @ColumnInfo(collate = ColumnInfo.NOCASE)
   private String caption;
+
+  @ColumnInfo(name = "mime_type", index = true)
   private String mimeType;
+
   private Uri uri;
+
+  @ColumnInfo(index = true)
   private Instant created;
+
+  @ColumnInfo(name = "note_id", index = true)
   private long noteId;
 
   public long getId() {
