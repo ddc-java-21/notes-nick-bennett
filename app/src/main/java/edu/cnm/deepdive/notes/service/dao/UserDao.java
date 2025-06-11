@@ -11,6 +11,7 @@ import edu.cnm.deepdive.notes.model.entity.User;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
+import java.time.Instant;
 import java.util.List;
 
 @Dao
@@ -35,6 +36,17 @@ public interface UserDao {
 
   @Update
   Completable update(User user);
+
+  default Single<User> updateTimestampAndSave(User user) {
+    return Single
+        .just(user)
+        .map((u) -> {
+          u.setModified(Instant.now());
+          return u;
+        })
+        .flatMapCompletable(this::update)
+        .andThen(Single.just(user));
+  }
 
   @Update(onConflict = OnConflictStrategy.IGNORE)
   Single<Integer> update(List<User> users);

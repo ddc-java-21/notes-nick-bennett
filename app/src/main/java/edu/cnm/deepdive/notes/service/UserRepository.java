@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.List;
 import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,8 +29,7 @@ public class UserRepository {
     return (
         (user.getId() == 0)
             ? userDao.insertAndGet(user)
-            : userDao.update(user)
-                .andThen(Single.just(user))
+            : userDao.updateTimestampAndSave(user)
     )
         .subscribeOn(scheduler);
   }
@@ -42,6 +42,10 @@ public class UserRepository {
     return userDao
         .delete(user)
         .subscribeOn(scheduler);
+  }
+
+  public LiveData<List<User>> getAll() {
+    return userDao.select();
   }
 
 }

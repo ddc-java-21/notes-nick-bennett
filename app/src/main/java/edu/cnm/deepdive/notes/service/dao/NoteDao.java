@@ -17,8 +17,26 @@ public interface NoteDao {
   @Insert
   Single<Long> insert(Note note);
 
+  default Single<Note> insertAndGet(Note note) {
+    return insert(note)
+        .map((id) -> {
+          note.setId(id);
+          return note;
+        });
+  }
+
   @Update
-  Completable update(Note note);
+  Single<Integer> update(Note note);
+
+  default Single<Note> updateTimestampAndSave(Note note) {
+    return Single.just(note)
+        .map((n) -> {
+          n.setModified(n.getModified());
+          return n;
+        })
+        .flatMap(this::update)
+        .map((i) -> note);
+  }
 
   @Delete
   Single<Integer> delete(Note note);
