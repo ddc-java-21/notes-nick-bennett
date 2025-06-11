@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.notes.model.entity;
 
 import android.net.Uri;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -37,10 +38,13 @@ public class Image {
   @ColumnInfo(name = "mime_type", index = true)
   private String mimeType;
 
+  /** @noinspection NotNullFieldNotInitialized*/
+  @NonNull
   private Uri uri;
 
+  @NonNull
   @ColumnInfo(index = true)
-  private Instant created;
+  private Instant created = Instant.now();
 
   @ColumnInfo(name = "note_id", index = true)
   private long noteId;
@@ -69,19 +73,21 @@ public class Image {
     this.mimeType = mimeType;
   }
 
+  @NonNull
   public Uri getUri() {
     return uri;
   }
 
-  public void setUri(Uri uri) {
+  public void setUri(@NonNull Uri uri) {
     this.uri = uri;
   }
 
+  @NonNull
   public Instant getCreated() {
     return created;
   }
 
-  public void setCreated(Instant created) {
+  public void setCreated(@NonNull Instant created) {
     this.created = created;
   }
 

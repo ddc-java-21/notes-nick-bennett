@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9ea355ceede099d920d932cfeb0b932b",
+    "identityHash": "daf7db0ecc98fd94246a80b15697ed6c",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `oauth_key` TEXT, `display_name` TEXT COLLATE NOCASE, `created` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `oauth_key` TEXT NOT NULL, `display_name` TEXT NOT NULL COLLATE NOCASE, `created` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -17,17 +17,20 @@
           {
             "fieldPath": "oauthKey",
             "columnName": "oauth_key",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "displayName",
             "columnName": "display_name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "created",
             "columnName": "created",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -59,7 +62,7 @@
       },
       {
         "tableName": "note",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT COLLATE NOCASE, `description` TEXT, `created` INTEGER, `modified` INTEGER, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL COLLATE NOCASE, `description` TEXT, `created` INTEGER NOT NULL, `modified` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -70,7 +73,8 @@
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "description",
@@ -80,12 +84,14 @@
           {
             "fieldPath": "created",
             "columnName": "created",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "modified",
             "columnName": "modified",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "userId",
@@ -154,7 +160,7 @@
       },
       {
         "tableName": "image",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`image_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `caption` TEXT COLLATE NOCASE, `mime_type` TEXT, `uri` TEXT, `created` INTEGER, `note_id` INTEGER NOT NULL, FOREIGN KEY(`note_id`) REFERENCES `note`(`note_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`image_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `caption` TEXT COLLATE NOCASE, `mime_type` TEXT, `uri` TEXT NOT NULL, `created` INTEGER NOT NULL, `note_id` INTEGER NOT NULL, FOREIGN KEY(`note_id`) REFERENCES `note`(`note_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -175,12 +181,14 @@
           {
             "fieldPath": "uri",
             "columnName": "uri",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "created",
             "columnName": "created",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "noteId",
@@ -241,7 +249,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9ea355ceede099d920d932cfeb0b932b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'daf7db0ecc98fd94246a80b15697ed6c')"
     ]
   }
 }

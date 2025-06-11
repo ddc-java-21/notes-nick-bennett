@@ -4,6 +4,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.notes.databinding.ActivityMainBinding;
+import edu.cnm.deepdive.notes.service.dao.UserDao;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import javax.inject.Inject;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+
   }
 
 
