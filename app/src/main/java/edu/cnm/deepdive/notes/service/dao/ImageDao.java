@@ -7,33 +7,54 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.notes.model.entity.Image;
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import java.time.Instant;
+import java.util.Iterator;
 import java.util.List;
 
 @Dao
 public interface ImageDao {
 
   @Insert
-  Single<Long> insert(Image image);
+  Single<Long> _insert(Image image);
+
+  default Single<Image> insert(Image image) {
+    return Single
+        .just(image)
+        .doOnSuccess((img) -> img.setCreated(Instant.now()))
+        .flatMap(this::_insert)
+        .map(image::setId);
+  }
 
   @Insert
-  Single<List<Long>> insert(List<Image> images);
+  Single<List<Long>> _insert(List<Image> images);
 
-  @Insert
-  Single<List<Long>> insert(Image... images);
+  default Single<List<Image>> insert(List<Image> images) {
+    return Single
+        .just(images)
+        .doOnSuccess((imgs) -> {
+          Instant now = Instant.now();
+          imgs.forEach((img) -> img.setCreated(now));
+        })
+        .flatMap(this::_insert)
+        .map((ids) -> {
+          Iterator<Long> idIterator = ids.iterator();
+          Iterator<Image> imgIterator = images.iterator();
+          while (idIterator.hasNext() && imgIterator.hasNext()) {
+            imgIterator.next().setId(idIterator.next());
+          }
+          return images;
+        });
+  }
 
   @Update
-  Completable update(Image image);
+  Single<Integer> update(Image image);
 
   @Delete
-  Completable delete(Image image);
+  Single<Integer> delete(Image image);
 
   @Delete
-  Completable delete(List<Image> images);
-
-  @Delete
-  Completable delete(Image... images);
+  Single<Integer> delete(List<Image> images);
 
   @Query("SELECT * FROM image WHERE image_id = :imageId")
   LiveData<Image> select(long imageId);

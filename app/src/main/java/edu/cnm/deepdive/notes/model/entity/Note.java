@@ -45,8 +45,9 @@ public class Note {
     return id;
   }
 
-  public void setId(long id) {
+  public Note setId(long id) {
     this.id = id;
+    return this;
   }
 
   @NonNull
@@ -54,16 +55,18 @@ public class Note {
     return title;
   }
 
-  public void setTitle(@NonNull String title) {
+  public Note setTitle(@NonNull String title) {
     this.title = title;
+    return this;
   }
 
   public String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
+  public Note setDescription(String description) {
     this.description = description;
+    return this;
   }
 
   @NonNull
@@ -71,8 +74,9 @@ public class Note {
     return created;
   }
 
-  public void setCreated(@NonNull Instant created) {
+  public Note setCreated(@NonNull Instant created) {
     this.created = created;
+    return this;
   }
 
   @NonNull
@@ -80,16 +84,17 @@ public class Note {
     return modified;
   }
 
-  public void setModified(@NonNull Instant modified) {
+  public Note setModified(@NonNull Instant modified) {
     this.modified = modified;
+    return this;
   }
 
   public long getUserId() {
     return userId;
   }
 
-  public void setUserId(long userId) {
+  public Note setUserId(long userId) {
     this.userId = userId;
+    return this;
   }
-
 }

@@ -53,24 +53,27 @@ public class Image {
     return id;
   }
 
-  public void setId(long id) {
+  public Image setId(long id) {
     this.id = id;
+    return this;
   }
 
   public String getCaption() {
     return caption;
   }
 
-  public void setCaption(String caption) {
+  public Image setCaption(String caption) {
     this.caption = caption;
+    return this;
   }
 
   public String getMimeType() {
     return mimeType;
   }
 
-  public void setMimeType(String mimeType) {
+  public Image setMimeType(String mimeType) {
     this.mimeType = mimeType;
+    return this;
   }
 
   @NonNull
@@ -78,8 +81,9 @@ public class Image {
     return uri;
   }
 
-  public void setUri(@NonNull Uri uri) {
+  public Image setUri(@NonNull Uri uri) {
     this.uri = uri;
+    return this;
   }
 
   @NonNull
@@ -87,15 +91,17 @@ public class Image {
     return created;
   }
 
-  public void setCreated(@NonNull Instant created) {
+  public Image setCreated(@NonNull Instant created) {
     this.created = created;
+    return this;
   }
 
   public long getNoteId() {
     return noteId;
   }
 
-  public void setNoteId(long noteId) {
+  public Image setNoteId(long noteId) {
     this.noteId = noteId;
+    return this;
   }
 }
