@@ -19,11 +19,14 @@ public interface NoteDao {
   Single<Long> insert(Note note);
 
   default Single<Note> insertAndGet(Note note) {
-    return insert(note)
-        .map((id) -> {
-          note.setId(id);
-          return note;
-        });
+    return Single.just(note)
+        .doOnSuccess((n) -> {
+          Instant now = Instant.now();
+          n.setCreated(now)
+              .setModified(now);
+        })
+        .flatMap(this::insert)
+        .map(note::setId);
   }
 
   @Update
@@ -31,10 +34,7 @@ public interface NoteDao {
 
   default Single<Note> updateTimestampAndSave(Note note) {
     return Single.just(note)
-        .map((n) -> {
-          n.setModified(Instant.now());
-          return n;
-        })
+        .doOnSuccess((n) -> n.setModified(Instant.now()))
         .flatMap(this::update)
         .map((i) -> note);
   }
