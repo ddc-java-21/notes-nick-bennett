@@ -23,7 +23,10 @@ public interface ImageDao {
         .just(image)
         .doOnSuccess((img) -> img.setCreated(Instant.now()))
         .flatMap(this::_insert)
-        .map(image::setId);
+        .map((id) -> {
+          image.setId(id);
+          return image;
+        });
   }
 
   @Insert

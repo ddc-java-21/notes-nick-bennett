@@ -22,10 +22,14 @@ public interface NoteDao {
         .just(note)
         .doOnSuccess((n) -> {
           Instant now = Instant.now();
-          n.setCreated(now).setModified(now);
+          n.setCreated(now);
+          n.setModified(now);
         })
         .flatMap(this::_insert)
-        .map(note::setId);
+        .map((id) -> {
+          note.setId(id);
+          return note;
+        });
   }
 
   @Update
