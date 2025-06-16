@@ -36,8 +36,8 @@ public class NoteRepository {
   public Single<Note> save(Note note) {
     return (
         (note.getId() == 0)
-            ? noteDao.insertAndGet(note)
-            : noteDao.updateTimestampAndSave(note)
+            ? noteDao.insert(note)
+            : noteDao.update(note)
     )
         .subscribeOn(scheduler);
   }

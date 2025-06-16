@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "daf7db0ecc98fd94246a80b15697ed6c",
+    "identityHash": "10340b86a349ad2efac1ed36c72c8885",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `oauth_key` TEXT NOT NULL, `display_name` TEXT NOT NULL COLLATE NOCASE, `created` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `oauth_key` TEXT NOT NULL, `display_name` TEXT NOT NULL COLLATE NOCASE, `created` INTEGER NOT NULL, `modified` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -29,6 +29,12 @@
           {
             "fieldPath": "created",
             "columnName": "created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modified",
+            "columnName": "modified",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -249,7 +255,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'daf7db0ecc98fd94246a80b15697ed6c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '10340b86a349ad2efac1ed36c72c8885')"
     ]
   }
 }

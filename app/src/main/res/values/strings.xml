@@ -1,2 +1,4 @@
 <resources>
+  <string name="list_fragment_label">All Notes</string>
+  <string name="title_hint">Title</string>
 </resources>

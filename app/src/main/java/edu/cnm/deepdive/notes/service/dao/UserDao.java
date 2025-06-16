@@ -23,11 +23,12 @@ public interface UserDao {
         .just(user)
         .doOnSuccess((u) -> {
           Instant now = Instant.now();
-          u.setCreated(now)
-              .setModified(now);
+          u.setCreated(now);
+          u.setModified(now);
         })
         .flatMap(this::_insert)
-        .map(user::setId);
+        .doOnSuccess(user::setId)
+        .map((id) -> user);
   }
 
   @Update

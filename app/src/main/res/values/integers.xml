@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="title_weight">8</integer>
+  <integer name="created_weight">4</integer>
+  <integer name="min_description_lines">1</integer>
+  <integer name="max_description_lines">4</integer>
+</resources>

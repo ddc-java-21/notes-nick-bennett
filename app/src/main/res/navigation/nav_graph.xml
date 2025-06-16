@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_graph"
+  app:startDestination="@id/list_fragment">
+
+  <fragment
+    android:id="@+id/list_fragment"
+    android:name="edu.cnm.deepdive.notes.controller.ListFragment"
+    android:label="@string/list_fragment_label"
+    tools:layout="@layout/fragment_list"/>
+
+  <!-- TODO Add silent sign in, sign in, note detail, and another other required fragments & actions.-->
+
+</navigation>
