@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <!--TODO Define TextView widgets for read-only display of title and description.-->
+
+  <!--TODO Define TextView widgets for display of created and modified dates.-->
+
+  <!--TODO Define TextInputLayout/TextInputEditText pairs for editable title and description.-->
+
+  <!--TODO Define ListView widget for images.-->
+
+  <!--TODO Define Button or ImageButton widgets for edit/save/cancel actions.-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,10 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import edu.cnm.deepdive.notes.model.entity.Note;
+import edu.cnm.deepdive.notes.model.pojo.NoteWithImages;
 import io.reactivex.rxjava3.core.Single;
 import java.time.Instant;
 import java.util.Iterator;
@@ -70,16 +72,18 @@ public interface NoteDao {
   Single<Integer> delete(Note note);
 
   @Delete
-  Single<Integer> delete(List<Note> notes);
+  Single<Integer> delete(List<? extends Note> notes);
 
   @Delete
   Single<Integer> delete(Note... notes);
 
+  @Transaction
   @Query("SELECT * FROM note WHERE note_id = :noteId")
-  LiveData<Note> select(long noteId);
+  LiveData<NoteWithImages> select(long noteId);
 
+  @Transaction
   @Query("SELECT * FROM note WHERE user_id = :userId ORDER BY created DESC")
-  LiveData<List<Note>> selectWhereUserIdOrderByCreatedDesc(long userId);
+  LiveData<List<NoteWithImages>> selectWhereUserIdOrderByCreatedDesc(long userId);
 
   // TODO: 6/11/25 Add more queries as appropriate.
 

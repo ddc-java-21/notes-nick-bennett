@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     setupNavigation();
   }
 
+  @Override
+  public boolean onSupportNavigateUp() {
+    return NavigationUI.navigateUp(navController, appBarConfig);
+  }
+
   private void setupUI() {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());

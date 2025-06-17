@@ -9,7 +9,31 @@
     android:id="@+id/list_fragment"
     android:name="edu.cnm.deepdive.notes.controller.ListFragment"
     android:label="@string/list_fragment_label"
-    tools:layout="@layout/fragment_list"/>
+    tools:layout="@layout/fragment_list">
+
+    <action
+      android:id="@+id/show_details"
+      app:destination="@id/details_fragment">
+
+      <argument
+        android:name="note_id"
+        app:argType="long"/>
+
+    </action>
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/details_fragment"
+    android:name="edu.cnm.deepdive.notes.controller.DetailsFragment"
+    android:label="@string/details_fragment_label"
+    tools:layout="@layout/fragment_details">
+
+    <argument
+      android:name="note_id"
+      app:argType="long"/>
+
+  </fragment>
 
   <!-- TODO Add silent sign in, sign in, note detail, and another other required fragments & actions.-->
 
