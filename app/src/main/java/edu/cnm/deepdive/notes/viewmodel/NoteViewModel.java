@@ -14,6 +14,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.notes.model.entity.Note;
 import edu.cnm.deepdive.notes.service.NoteRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import java.util.List;
 import javax.inject.Inject;
 import kotlin.jvm.functions.Function1;
@@ -52,6 +53,29 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
 
   public LiveData<Note> getNote() {
     return note;
+  }
+
+  public void save(Note note) {
+    throwable.setValue(null);
+    repository
+        .save(note)
+        .ignoreElement()
+        .subscribe(
+            () -> {},
+            this::postThrowable,
+            pending
+        );
+  }
+
+  public void remove(Note note) {
+    throwable.setValue(null);
+    repository
+        .remove(note)
+        .subscribe(
+            () -> {},
+            this::postThrowable,
+            pending
+        );
   }
 
   public LiveData<Throwable> getThrowable() {

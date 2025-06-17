@@ -20,4 +20,8 @@
     <!-- TODO Customize your theme here. -->
   </style>
 
+  <style name="ListItemTitle" parent="TextAppearance.Material3.TitleMedium">
+    <!-- TODO Override other attributes as appropriate.-->
+  </style>
+
 </resources>

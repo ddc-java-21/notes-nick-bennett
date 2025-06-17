@@ -6,71 +6,53 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:padding="@dimen/half_dynamic_spacing"
-  android:layout_margin="@dimen/half_dynamic_spacing"
+  android:layout_margin="@dimen/half_static_spacing"
   android:clickable="true"
   android:focusable="true"
-  android:background="?attr/selectableItemBackground">
+  android:background="?attr/selectableItemBackground"
+  app:cardCornerRadius="4dp"
+  app:cardElevation="4dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/half_dynamic_spacing">
 
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/title_layout"
+    <TextView
+      android:id="@+id/title"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/half_dynamic_spacing"
-      app:hintEnabled="true"
-      app:hintAnimationEnabled="true"
-      app:layout_constraintStart_toStartOf="parent"
+      android:layout_margin="@dimen/half_static_spacing"
+      style="@style/ListItemTitle"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/created"
-      app:layout_constraintHorizontal_weight="@integer/title_weight">
-
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/title_hint"
-        tools:text="Some note title"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/created"
+      app:layout_constraintHorizontal_weight="@integer/title_weight"
+      tools:text="Some note title"/>
 
     <TextView
       android:id="@+id/created"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/half_dynamic_spacing"
-      app:layout_constraintBaseline_toBaselineOf="@id/title_layout"
-      app:layout_constraintStart_toEndOf="@id/title_layout"
+      android:layout_margin="@dimen/half_static_spacing"
+      app:layout_constraintBaseline_toBaselineOf="@id/title"
+      app:layout_constraintStart_toEndOf="@id/title"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_weight="@integer/created_weight"
       tools:text="2025-06-16 16:30"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/description_layout"
+    <TextView
+      android:id="@+id/description"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/half_dynamic_spacing"
-      app:hintEnabled="true"
-      app:hintAnimationEnabled="true"
+      android:layout_margin="@dimen/half_static_spacing"
+      android:minLines="@integer/min_description_lines"
+      android:maxLines="@integer/max_description_lines"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/title_layout"
-      app:layout_constraintEnd_toStartOf="@+id/thumbnail"
-      app:layout_constraintHorizontal_weight="@integer/title_weight">
-
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:minLines="@integer/min_description_lines"
-        android:maxLines="@integer/max_description_lines"
-        android:hint="@string/description_hint"
-        tools:text="This is a long note, with lots of content, which will wrap to multiple lines. I didn't say it was interesting content."/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+      app:layout_constraintTop_toBottomOf="@id/title"
+      app:layout_constraintEnd_toStartOf="@id/thumbnail"
+      app:layout_constraintHorizontal_weight="@integer/title_weight"
+      tools:text="This is a long note, with lots of content, which will wrap to multiple lines. I didn't say it was interesting content."/>
 
     <ImageView
       android:id="@+id/thumbnail"
@@ -78,11 +60,11 @@
       android:layout_height="wrap_content"
       android:scaleType="fitCenter"
       android:adjustViewBounds="true"
-      android:layout_marginHorizontal="@dimen/half_dynamic_spacing"
-      android:layout_marginBottom="@dimen/half_dynamic_spacing"
+      android:layout_marginHorizontal="@dimen/half_static_spacing"
+      android:layout_marginBottom="@dimen/half_static_spacing"
       android:layout_marginTop="0dp"
-      app:layout_constraintStart_toEndOf="@id/description_layout"
-      app:layout_constraintTop_toTopOf="@id/description_layout"
+      app:layout_constraintStart_toEndOf="@id/description"
+      app:layout_constraintTop_toTopOf="@id/description"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_weight="@integer/created_weight"
       tools:src="@android:drawable/gallery_thumb"
