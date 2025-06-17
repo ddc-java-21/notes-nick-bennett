@@ -3,4 +3,5 @@
   <string name="title_hint">Title</string>
   <string name="description_hint">Description</string>
   <string name="details_fragment_label">Note Details</string>
+  <string name="camera_permission_explanation">If permission to use camera is granted, images can be captured and attached to notes.</string>
 </resources>
