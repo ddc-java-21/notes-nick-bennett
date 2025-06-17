@@ -1,0 +1,18 @@
+{
+  "oauthKey": "01234567890123456789",
+  "displayName": "Nicholas Bennett",
+  "notes": [
+    {
+      "title": "First note",
+      "description": "This is the first note preloaded into the database."
+    },
+    {
+      "title": "Second note",
+      "description": "This is the second note preloaded into the database."
+    },
+    {
+      "title": "Third note",
+      "description": "This is the third (last?) note preloaded into the database."
+    }
+  ]
+}
