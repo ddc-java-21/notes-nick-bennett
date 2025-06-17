@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -40,6 +41,10 @@ public class NoteRepository {
             : noteDao.update(note)
     )
         .subscribeOn(scheduler);
+  }
+
+  public LiveData<List<Note>> getAll() {
+    return noteDao.selectWhereUserIdOrderByCreatedDesc(1); // FIXME: 6/17/25 Replace after implementing Google Sign In.
   }
 
 }

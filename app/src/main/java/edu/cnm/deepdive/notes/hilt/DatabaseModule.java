@@ -11,6 +11,7 @@ import edu.cnm.deepdive.notes.service.NotesDatabase;
 import edu.cnm.deepdive.notes.service.dao.ImageDao;
 import edu.cnm.deepdive.notes.service.dao.NoteDao;
 import edu.cnm.deepdive.notes.service.dao.UserDao;
+import edu.cnm.deepdive.notes.service.util.Preloader;
 import javax.inject.Singleton;
 
 @Module
@@ -19,9 +20,9 @@ public class DatabaseModule {
 
   @Provides
   @Singleton
-  NotesDatabase provideDatabase(@ApplicationContext Context context) { // TODO: 6/11/25 Add preloader if necesssary.
+  NotesDatabase provideDatabase(@ApplicationContext Context context, Preloader preloader) {
     return Room.databaseBuilder(context, NotesDatabase.class, NotesDatabase.getName())
-//        .addCallback()
+        .addCallback(preloader)
         .build();
   }
 
