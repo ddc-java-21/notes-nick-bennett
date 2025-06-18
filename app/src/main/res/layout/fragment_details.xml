@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <!--TODO Define TextView widgets for read-only display of title and description.-->
 
@@ -10,8 +11,67 @@
 
   <!--TODO Define TextInputLayout/TextInputEditText pairs for editable title and description.-->
 
-  <!--TODO Define ListView widget for images.-->
-
   <!--TODO Define Button or ImageButton widgets for edit/save/cancel actions.-->
+
+  <ImageButton
+    android:id="@+id/edit"
+    android:layout_width="@dimen/edit_button_size"
+    android:layout_height="@dimen/edit_button_size"
+    android:layout_margin="@dimen/half_dynamic_spacing"
+    android:src="@drawable/edit_note"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:contentDescription="@string/edit_note_description"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/images"
+    app:layout_constraintEnd_toStartOf="@id/add_photo"/>
+
+  <ImageButton
+    android:id="@+id/add_photo"
+    android:layout_width="@dimen/edit_button_size"
+    android:layout_height="@dimen/edit_button_size"
+    android:layout_margin="@dimen/half_dynamic_spacing"
+    android:src="@drawable/add_photo"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:contentDescription="@string/add_photo_description"
+    android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@id/images"
+    app:layout_constraintStart_toEndOf="@id/edit"
+    app:layout_constraintEnd_toStartOf="@id/save"/>
+
+  <ImageButton
+    android:id="@+id/save"
+    android:layout_width="@dimen/edit_button_size"
+    android:layout_height="@dimen/edit_button_size"
+    android:layout_margin="@dimen/half_dynamic_spacing"
+    android:src="@drawable/save_changes"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:contentDescription="@string/save_changes_description"
+    android:visibility="invisible"
+    app:layout_constraintStart_toEndOf="@id/add_photo"
+    app:layout_constraintBottom_toTopOf="@id/images"
+    app:layout_constraintEnd_toStartOf="@id/cancel"/>
+
+  <ImageButton
+    android:id="@+id/cancel"
+    android:layout_width="@dimen/edit_button_size"
+    android:layout_height="@dimen/edit_button_size"
+    android:layout_margin="@dimen/half_dynamic_spacing"
+    android:src="@drawable/cancel_edit"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:contentDescription="@string/cancel_changes_description"
+    android:visibility="invisible"
+    app:layout_constraintStart_toEndOf="@id/save"
+    app:layout_constraintBottom_toTopOf="@id/images"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <ListView
+    android:id="@+id/images"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/thumbnail_list_height"
+    android:layout_marginTop="@dimen/half_dynamic_spacing"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

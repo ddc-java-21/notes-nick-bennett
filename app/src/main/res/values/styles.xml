@@ -18,6 +18,9 @@
   <!-- Base application theme. -->
   <style name="AppTheme" parent="Theme.Material3.DayNight">
     <!-- TODO Customize your theme here. -->
+    <item name="colorCancel">@color/cancel</item>
+    <item name="colorSave">@color/ok</item>
+    <item name="colorEdit">@color/edit</item>
   </style>
 
   <style name="ListItemTitle" parent="TextAppearance.Material3.TitleMedium">

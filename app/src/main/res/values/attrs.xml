@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <attr name="colorCancel" format="color|reference"/>
+  <attr name="colorSave" format="color|reference"/>
+  <attr name="colorEdit" format="color|reference"/>
+</resources>
