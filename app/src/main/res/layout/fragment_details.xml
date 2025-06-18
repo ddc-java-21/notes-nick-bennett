@@ -22,6 +22,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/half_static_spacing"
+      style="@style/DetailsTitle"
       tools:text="This note has a title"/>
 
     <TextView
@@ -29,6 +30,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/half_static_spacing"
+      style="@style/DetailsDescription"
       tools:text="This note also has a description, which can (and probably will) wrap to multiple lines"/>
 
   </LinearLayout>
