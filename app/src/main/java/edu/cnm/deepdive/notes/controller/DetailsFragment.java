@@ -56,8 +56,17 @@ public class DetailsFragment extends Fragment {
     binding = FragmentDetailsBinding.inflate(inflater, container, false);
     binding.edit.setOnClickListener((v) -> viewModel.setEditing(true));
     binding.save.setOnClickListener((v) -> {
-      // TODO: 6/18/25 Update note field and invoke save method in viewModel.
+      boolean addObserver = (note.getId() == 0);
+      note.setTitle(binding.titleEditable.getText().toString().strip());
+      String description = binding.descriptionEditable.getText().toString().strip();
+      note.setDescription(description.isEmpty() ? null : description);
+      viewModel.save(note);
       viewModel.setEditing(false);
+      if (addObserver) {
+        viewModel
+            .getNote()
+            .observe(getViewLifecycleOwner(), this::handleNote);
+      }
     });
     binding.cancel.setOnClickListener((v) -> {
       // TODO: 6/18/25 Discard changes, return note field to its original state.
@@ -80,6 +89,8 @@ public class DetailsFragment extends Fragment {
           .observe(owner, this::handleNote);
     } else {
       note = new NoteWithImages();
+      handleNote(note);
+      viewModel.setEditing(true);
     }
     viewModel
         .getCaptureUri()
@@ -120,6 +131,7 @@ public class DetailsFragment extends Fragment {
 
   private void handleNote(NoteWithImages note) {
     this.note = note;
+    noteId = note.getId();
     binding.titleStatic.setText(note.getTitle());
     binding.titleEditable.setText(note.getTitle());
     binding.descriptionStatic.setText(note.getDescription());

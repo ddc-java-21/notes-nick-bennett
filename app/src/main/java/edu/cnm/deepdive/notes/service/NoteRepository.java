@@ -37,6 +37,7 @@ public class NoteRepository {
 
   public Single<Note> save(NoteWithImages note) {
     // TODO: 6/17/25 Modify to insert/update images
+    note.setUserId(1); // FIXME: 6/18/25 Replace after implementing Google Sign In.
     return (
         (note.getId() == 0)
             ? noteDao.insert(note)

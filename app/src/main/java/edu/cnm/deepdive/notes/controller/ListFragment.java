@@ -39,6 +39,8 @@ public class ListFragment extends Fragment implements MenuProvider {
     binding.notes.setAdapter(adapter);
     adapter.setListener((note, position) -> Navigation.findNavController(binding.getRoot())
         .navigate(ListFragmentDirections.showDetails(note.getId())));
+    binding.addNote.setOnClickListener((v) -> Navigation.findNavController(binding.getRoot())
+        .navigate(ListFragmentDirections.showDetails(0)));
     return binding.getRoot();
   }
 
