@@ -27,6 +27,7 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
   private final MutableLiveData<Long> noteId;
   private final LiveData<NoteWithImages> note;
   private final MutableLiveData<Uri> captureUri;
+  private final MutableLiveData<Boolean> editing;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
 
@@ -39,6 +40,7 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
     noteId = new MutableLiveData<>();
     note = Transformations.switchMap(noteId, repository::get);
     captureUri = new MutableLiveData<>();
+    editing = new MutableLiveData<>(false);
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
   }
@@ -65,6 +67,14 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
 
   public void setPendingCaptureUri(Uri pendingCaptureUri) {
     this.pendingCaptureUri = pendingCaptureUri;
+  }
+
+  public LiveData<Boolean> getEditing() {
+    return editing;
+  }
+
+  public void setEditing(boolean editing) {
+    this.editing.setValue(editing);
   }
 
   public void confirmCapture(boolean success) {
