@@ -1,17 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context=".controller.DetailsFragment">
 
-  <!--TODO Define TextView widgets for read-only display of title and description.-->
+  <LinearLayout
+    android:id="@+id/static_content"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:padding="@dimen/half_dynamic_spacing"
+    android:gravity="top|start"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toTopOf="@id/edit"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+      android:id="@+id/title_static"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      tools:text="This note has a title"/>
+
+    <TextView
+      android:id="@+id/description_static"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      tools:text="This note also has a description, which can (and probably will) wrap to multiple lines"/>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/editable_content"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:padding="@dimen/half_dynamic_spacing"
+    android:orientation="vertical"
+    android:gravity="top|start"
+    android:visibility="gone"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/edit">
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/title_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      app:hintEnabled="true"
+      app:hintAnimationEnabled="true">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/title_editable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:maxLines="2"
+        android:hint="@string/title_hint"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/description_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      app:hintEnabled="true"
+      app:hintAnimationEnabled="true">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description_editable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:maxLines="8"
+        android:hint="@string/description_hint"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+  </LinearLayout>
 
   <!--TODO Define TextView widgets for display of created and modified dates.-->
-
-  <!--TODO Define TextInputLayout/TextInputEditText pairs for editable title and description.-->
-
-  <!--TODO Define Button or ImageButton widgets for edit/save/cancel actions.-->
 
   <ImageButton
     android:id="@+id/edit"

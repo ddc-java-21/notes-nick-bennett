@@ -9,4 +9,5 @@
   <string name="add_photo_description">Add photo</string>
   <string name="save_changes_description">Save changes</string>
   <string name="cancel_changes_description">Cancel changes</string>
+  <string name="add_note_description">Create new note</string>
 </resources>
