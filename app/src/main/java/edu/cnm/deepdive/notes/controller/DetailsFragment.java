@@ -90,6 +90,7 @@ public class DetailsFragment extends Fragment {
     } else {
       note = new NoteWithImages();
       handleNote(note);
+      viewModel.clearImages();
       viewModel.setEditing(true);
     }
     viewModel

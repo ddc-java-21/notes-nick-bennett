@@ -41,9 +41,6 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
   private Uri pendingCaptureUri;
   private Instant noteModified;
 
-  /**
-   * @noinspection DataFlowIssue
-   */
   @Inject
   NoteViewModel(@ApplicationContext Context context, NoteRepository repository) {
     this.context = context;
@@ -56,10 +53,6 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
     visibilityFlags = setupVisibilityFlags();
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
-  }
-
-  public LiveData<Long> getNoteId() {
-    return noteId;
   }
 
   public void setNoteId(long noteId) {
@@ -90,6 +83,11 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
     //noinspection DataFlowIssue
     images.remove(image);
     this.images.setValue(images);
+  }
+
+  public void clearImages() {
+    this.images.setValue(new ArrayList<>());
+    noteModified = null;
   }
 
   public void setPendingCaptureUri(Uri pendingCaptureUri) {
