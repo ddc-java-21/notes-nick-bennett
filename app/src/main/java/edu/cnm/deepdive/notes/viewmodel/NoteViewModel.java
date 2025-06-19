@@ -17,9 +17,9 @@ import edu.cnm.deepdive.notes.model.entity.Image;
 import edu.cnm.deepdive.notes.model.entity.Note;
 import edu.cnm.deepdive.notes.model.pojo.NoteWithImages;
 import edu.cnm.deepdive.notes.service.NoteRepository;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -32,7 +32,6 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
   private final MutableLiveData<Long> noteId;
   private final LiveData<NoteWithImages> note;
   private final MutableLiveData<List<Image>> images;
-  private final MutableLiveData<Uri> captureUri;
   private final MutableLiveData<Boolean> editing;
   private final MutableLiveData<Boolean> cameraPermission;
   private final MediatorLiveData<VisibilityFlags> visibilityFlags;
@@ -40,6 +39,7 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
   private final CompositeDisposable pending;
 
   private Uri pendingCaptureUri;
+  private Instant noteModified;
 
   /**
    * @noinspection DataFlowIssue
@@ -49,22 +49,11 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
     this.context = context;
     this.repository = repository;
     noteId = new MutableLiveData<>();
-    note = Transformations.switchMap(noteId, repository::get);
     images = new MutableLiveData<>(new ArrayList<>());
-    note.observeForever((note) -> {
-      List<Image> images = this.images.getValue();
-      images.clear();
-      images.addAll(note.getImages());
-      this.images.setValue(images);
-    });
-    captureUri = new MutableLiveData<>();
+    note = setupNoteWithImages();
     editing = new MutableLiveData<>(false);
     cameraPermission = new MutableLiveData<>(false);
-    visibilityFlags = new MediatorLiveData<>();
-    visibilityFlags.addSource(editing, (editing) ->
-        visibilityFlags.setValue(new VisibilityFlags(editing, cameraPermission.getValue())));
-    visibilityFlags.addSource(cameraPermission, (permission) ->
-        visibilityFlags.setValue(new VisibilityFlags(editing.getValue(), permission)));
+    visibilityFlags = setupVisibilityFlags();
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
   }
@@ -103,10 +92,6 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
     this.images.setValue(images);
   }
 
-  public LiveData<Uri> getCaptureUri() {
-    return captureUri;
-  }
-
   public void setPendingCaptureUri(Uri pendingCaptureUri) {
     this.pendingCaptureUri = pendingCaptureUri;
   }
@@ -133,22 +118,21 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
 
   public void confirmCapture(boolean success) {
     if (success) {
-      captureUri.setValue(pendingCaptureUri);
       Image image = new Image();
       image.setUri(pendingCaptureUri);
       addImage(image);
-    } else {
-      captureUri.setValue(null);
     }
     pendingCaptureUri = null;
   }
 
   public void save(NoteWithImages note) {
     throwable.setValue(null);
-    //noinspection DataFlowIssue
     Single.just(note)
-        .doOnSuccess((n) -> n.getImages().clear())
-        .doOnSuccess((n) -> n.getImages().addAll(images.getValue()))
+        .doOnSuccess((n) -> {
+          n.getImages().clear();
+          //noinspection DataFlowIssue
+          n.getImages().addAll(images.getValue());
+        })
         .flatMap(repository::save)
         .subscribe(
             (n) -> noteId.postValue(n.getId()),
@@ -177,6 +161,34 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
   public void onStop(@NonNull LifecycleOwner owner) {
     pending.clear();
     DefaultLifecycleObserver.super.onStop(owner);
+  }
+
+  @NonNull
+  private LiveData<NoteWithImages> setupNoteWithImages() {
+    LiveData<NoteWithImages> note = Transformations.switchMap(noteId, repository::get);
+    note.observeForever((n) -> {
+      if (n != null && !n.getModified().equals(noteModified)) {
+        List<Image> images = this.images.getValue();
+        //noinspection DataFlowIssue
+        images.clear();
+        images.addAll(n.getImages());
+        this.images.setValue(images);
+        noteModified = n.getModified();
+      }
+    });
+    return note;
+  }
+
+  /** @noinspection DataFlowIssue*/
+  @NonNull
+  private MediatorLiveData<VisibilityFlags> setupVisibilityFlags() {
+    final MediatorLiveData<VisibilityFlags> visibilityFlags;
+    visibilityFlags = new MediatorLiveData<>();
+    visibilityFlags.addSource(editing, (editing) ->
+        visibilityFlags.setValue(new VisibilityFlags(editing, cameraPermission.getValue())));
+    visibilityFlags.addSource(cameraPermission, (permission) ->
+        visibilityFlags.setValue(new VisibilityFlags(editing.getValue(), permission)));
+    return visibilityFlags;
   }
 
   private void postThrowable(Throwable throwable) {

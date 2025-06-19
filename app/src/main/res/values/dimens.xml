@@ -3,5 +3,5 @@
   <dimen name="half_dynamic_spacing">8dp</dimen>
   <dimen name="half_static_spacing">4dp</dimen>
   <dimen name="edit_button_size">48dp</dimen>
-  <dimen name="thumbnail_list_height">60dp</dimen>
+  <dimen name="thumbnail_list_height">112dp</dimen>
 </resources>
