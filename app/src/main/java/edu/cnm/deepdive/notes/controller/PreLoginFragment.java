@@ -48,6 +48,7 @@ public class PreLoginFragment extends Fragment {
                 .navigate(PreLoginFragmentDirections.showLogin());
           }
         });
+    viewModel.refresh();
   }
 
   @Override

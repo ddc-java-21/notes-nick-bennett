@@ -3,6 +3,7 @@ package edu.cnm.deepdive.notes.service;
 import androidx.lifecycle.LiveData;
 import edu.cnm.deepdive.notes.model.entity.Image;
 import edu.cnm.deepdive.notes.model.entity.Note;
+import edu.cnm.deepdive.notes.model.entity.User;
 import edu.cnm.deepdive.notes.model.pojo.NoteWithImages;
 import edu.cnm.deepdive.notes.service.dao.ImageDao;
 import edu.cnm.deepdive.notes.service.dao.NoteDao;
@@ -41,8 +42,8 @@ public class NoteRepository {
         .ignoreElement();
   }
 
-  public Single<NoteWithImages> save(NoteWithImages note) {
-    note.setUserId(1); // FIXME: 6/18/25 Replace after implementing Google Sign In.
+  public Single<NoteWithImages> save(NoteWithImages note, User user) {
+    note.setUserId(user.getId());
     return (
         (note.getId() == 0)
             ? noteDao.insert(note)
@@ -59,9 +60,8 @@ public class NoteRepository {
         .subscribeOn(scheduler);
   }
 
-  public LiveData<List<NoteWithImages>> getAll() {
-    return noteDao.selectWhereUserIdOrderByCreatedDesc(
-        1); // FIXME: 6/17/25 Replace after implementing Google Sign In.
+  public LiveData<List<NoteWithImages>> getAll(User user) {
+    return noteDao.selectWhereUserIdOrderByCreatedDesc(user.getId());
   }
 
   private Single<List<Image>> saveImages(List<Image> images) {

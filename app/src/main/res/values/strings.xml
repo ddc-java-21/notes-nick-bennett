@@ -12,4 +12,5 @@
   <string name="add_note_description">Create new note</string>
   <string name="login_fragment_label">Sign in to Notes</string>
   <string name="sign_in_failure_message">Unable to sign in with provided credentials.</string>
+  <string name="sign_out_title">Sign out</string>
 </resources>

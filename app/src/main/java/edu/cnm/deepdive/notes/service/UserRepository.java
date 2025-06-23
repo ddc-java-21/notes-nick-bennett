@@ -14,13 +14,35 @@ import javax.inject.Singleton;
 @Singleton
 public class UserRepository {
 
+  private final GoogleSignInService signInService;
   private final UserDao userDao;
   private final Scheduler scheduler;
 
   @Inject
-  UserRepository(UserDao userDao) {
+  UserRepository(GoogleSignInService signInService, UserDao userDao) {
+    this.signInService = signInService;
     this.userDao = userDao;
     scheduler = Schedulers.io();
+  }
+
+  /** @noinspection DataFlowIssue*/
+  public Single<User> getCurrentUser() {
+    return signInService
+        .refresh()
+        .observeOn(scheduler)
+        .flatMap((account) -> {
+          String oauthKey = account.getId();
+          return userDao
+              .select(oauthKey)
+              .switchIfEmpty(
+                  Single.just(new User())
+                      .doOnSuccess((user) -> {
+                        user.setOauthKey(oauthKey);
+                        user.setDisplayName(account.getDisplayName());
+                      })
+                      .flatMap(userDao::insert)
+              );
+        });
   }
 
   public Single<User> save(User user) {
