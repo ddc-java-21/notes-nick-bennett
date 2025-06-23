@@ -59,12 +59,11 @@ public class NoteAdapter extends Adapter<ViewHolder> {
   public void setNotes(List<NoteWithImages> notes) {
     this.notes.clear();
     this.notes.addAll(notes);
-    notifyDataSetChanged(); // TODO: 6/16/25 Investigate retaining scroll position.
+    notifyDataSetChanged();
   }
 
-  public NoteAdapter setListener(@NonNull OnNoteClickListener listener) {
+  public void setListener(@NonNull OnNoteClickListener listener) {
     this.listener = listener;
-    return this;
   }
 
   private static class Holder extends ViewHolder {

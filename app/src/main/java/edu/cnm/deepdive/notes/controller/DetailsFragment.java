@@ -33,6 +33,7 @@ import java.util.UUID;
 
 public class DetailsFragment extends Fragment {
 
+  /** @noinspection unused*/
   private static final String TAG = DetailsFragment.class.getSimpleName();
   private static final String AUTHORITY = ImageFileProvider.class.getName().toLowerCase();
 
@@ -49,6 +50,7 @@ public class DetailsFragment extends Fragment {
     noteId = DetailsFragmentArgs.fromBundle(getArguments()).getNoteId();
   }
 
+  /** @noinspection DataFlowIssue*/
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -69,7 +71,6 @@ public class DetailsFragment extends Fragment {
       }
     });
     binding.cancel.setOnClickListener((v) -> {
-      // TODO: 6/18/25 Discard changes, return note field to its original state.
       viewModel.setEditing(false);
     });
     binding.addPhoto.setOnClickListener((v) -> capture());
@@ -90,7 +91,7 @@ public class DetailsFragment extends Fragment {
     } else {
       note = new NoteWithImages();
       handleNote(note);
-      // TODO: 6/23/25 Invoke method in viewModel to clear images. 
+      viewModel.clearImages(); 
       viewModel.setEditing(true);
     }
     viewModel

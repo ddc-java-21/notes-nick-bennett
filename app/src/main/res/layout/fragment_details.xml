@@ -86,8 +86,6 @@
 
   </LinearLayout>
 
-  <!--TODO Define TextView widgets for display of created and modified dates.-->
-
   <ImageButton
     android:id="@+id/edit"
     android:layout_width="@dimen/edit_button_size"
