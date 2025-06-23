@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.notes.databinding.FragmentListBinding;
 import edu.cnm.deepdive.notes.view.adapter.NoteAdapter;
+import edu.cnm.deepdive.notes.viewmodel.LoginViewModel;
 import edu.cnm.deepdive.notes.viewmodel.NoteViewModel;
 import javax.inject.Inject;
 
@@ -54,6 +55,15 @@ public class ListFragment extends Fragment implements MenuProvider {
     viewModel
         .getNotes()
         .observe(owner, adapter::setNotes);
+    LoginViewModel loginViewModel = provider.get(LoginViewModel.class);
+    loginViewModel
+        .getAccount()
+            .observe(owner, (account) -> {
+              if (account == null) {
+                Navigation.findNavController(binding.getRoot())
+                    .navigate(ListFragmentDirections.showPreLogin());
+              }
+            });
     activity.addMenuProvider(this, owner, State.RESUMED);
   }
 

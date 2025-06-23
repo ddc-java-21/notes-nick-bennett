@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupNavigation() {
-    appBarConfig = new AppBarConfiguration.Builder(R.id.list_fragment)
+    appBarConfig = new AppBarConfiguration.Builder(
+        R.id.pre_login_fragment, R.id.login_fragment, R.id.list_fragment)
         .build();
     NavHostFragment host = binding.navHostFragment.getFragment();
     navController = host.getNavController();
