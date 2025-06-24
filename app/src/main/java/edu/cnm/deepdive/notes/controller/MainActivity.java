@@ -1,8 +1,15 @@
 package edu.cnm.deepdive.notes.controller;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,6 +21,7 @@ import edu.cnm.deepdive.notes.databinding.ActivityMainBinding;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
+  /** @noinspection unused*/
   private static final String TAG = MainActivity.class.getSimpleName();
 
   private ActivityMainBinding binding;
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
   private void setupUI() {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     EdgeToEdge.enable(this);
+    ViewCompat.setOnApplyWindowInsetsListener(binding.navHostFragment, MainActivity::adjustInsets);
     setContentView(binding.getRoot());
   }
 
@@ -46,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
     NavHostFragment host = binding.navHostFragment.getFragment();
     navController = host.getNavController();
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
+  }
+
+  @NonNull
+  private static WindowInsetsCompat adjustInsets(View view,
+      WindowInsetsCompat windowInsets) {
+    Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+    MarginLayoutParams mlp = (MarginLayoutParams) view.getLayoutParams();
+    mlp.leftMargin = insets.left;
+    mlp.bottomMargin = insets.bottom;
+    mlp.rightMargin = insets.right;
+    view.setLayoutParams(mlp);
+    return WindowInsetsCompat.CONSUMED;
   }
 
 }

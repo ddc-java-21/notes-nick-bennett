@@ -57,22 +57,8 @@ public class DetailsFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     binding = FragmentDetailsBinding.inflate(inflater, container, false);
     binding.edit.setOnClickListener((v) -> viewModel.setEditing(true));
-    binding.save.setOnClickListener((v) -> {
-      boolean addObserver = (note.getId() == 0);
-      note.setTitle(binding.titleEditable.getText().toString().strip());
-      String description = binding.descriptionEditable.getText().toString().strip();
-      note.setDescription(description.isEmpty() ? null : description);
-      viewModel.save(note);
-      viewModel.setEditing(false);
-      if (addObserver) {
-        viewModel
-            .getNote()
-            .observe(getViewLifecycleOwner(), this::handleNote);
-      }
-    });
-    binding.cancel.setOnClickListener((v) -> {
-      viewModel.setEditing(false);
-    });
+    binding.save.setOnClickListener((v) -> save());
+    binding.cancel.setOnClickListener((v) -> viewModel.setEditing(false));
     binding.addPhoto.setOnClickListener((v) -> capture());
     return binding.getRoot();
   }
@@ -80,19 +66,26 @@ public class DetailsFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    setupViewModel();
+    setupCameraAccess();
+  }
+
+  @Override
+  public void onDestroyView() {
+    binding = null;
+    super.onDestroyView();
+  }
+
+  private void setupViewModel() {
     LifecycleOwner owner = getViewLifecycleOwner();
-    ViewModelProvider provider = new ViewModelProvider(requireActivity());
-    viewModel = provider.get(NoteViewModel.class);
+    viewModel = new ViewModelProvider(requireActivity()).get(NoteViewModel.class);
     if (noteId != 0) {
       viewModel.setNoteId(noteId);
       viewModel
           .getNote()
           .observe(owner, this::handleNote);
     } else {
-      note = new NoteWithImages();
-      handleNote(note);
-      viewModel.clearImages(); 
-      viewModel.setEditing(true);
+      handleNote(new NoteWithImages());
     }
     viewModel
         .getImages()
@@ -103,11 +96,19 @@ public class DetailsFragment extends Fragment {
     viewModel
         .getVisibilityFlags()
         .observe(owner, this::handleVisibilityFlags);
-    requestCameraPermissionLauncher = registerForActivityResult(
-        new ActivityResultContracts.RequestPermission(),
-        viewModel::setCameraPermission);
-    takePictureLauncher = registerForActivityResult(new TakePicture(), viewModel::confirmCapture);
-    checkCameraPermission();
+  }
+
+  private void handleNote(NoteWithImages note) {
+    this.note = note;
+    noteId = note.getId();
+    binding.titleStatic.setText(note.getTitle());
+    binding.titleEditable.setText(note.getTitle());
+    binding.descriptionStatic.setText(note.getDescription());
+    binding.descriptionEditable.setText(note.getDescription());
+    if (noteId == 0) {
+      viewModel.clearImages();
+      viewModel.setEditing(true);
+    }
   }
 
   private void handleVisibilityFlags(VisibilityFlags flags) {
@@ -128,19 +129,26 @@ public class DetailsFragment extends Fragment {
     }
   }
 
-  private void handleNote(NoteWithImages note) {
-    this.note = note;
-    noteId = note.getId();
-    binding.titleStatic.setText(note.getTitle());
-    binding.titleEditable.setText(note.getTitle());
-    binding.descriptionStatic.setText(note.getDescription());
-    binding.descriptionEditable.setText(note.getDescription());
+  private void save() {
+    boolean addObserver = (note.getId() == 0);
+    note.setTitle(binding.titleEditable.getText().toString().strip());
+    String description = binding.descriptionEditable.getText().toString().strip();
+    note.setDescription(description.isEmpty() ? null : description);
+    viewModel.save(note);
+    viewModel.setEditing(false);
+    if (addObserver) {
+      viewModel
+          .getNote()
+          .observe(getViewLifecycleOwner(), this::handleNote);
+    }
   }
 
-  @Override
-  public void onDestroyView() {
-    binding = null;
-    super.onDestroyView();
+  private void setupCameraAccess() {
+    requestCameraPermissionLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestPermission(),
+        viewModel::setCameraPermission);
+    takePictureLauncher = registerForActivityResult(new TakePicture(), viewModel::confirmCapture);
+    checkCameraPermission();
   }
 
   private void checkCameraPermission() {

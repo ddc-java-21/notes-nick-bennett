@@ -73,6 +73,7 @@ public class NoteViewModel extends ViewModel implements DefaultLifecycleObserver
 
   public void setNoteId(long noteId) {
     this.noteId.setValue(noteId);
+    editing.setValue(false);
   }
 
   public LiveData<List<NoteWithImages>> getNotes() {
