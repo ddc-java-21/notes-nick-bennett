@@ -27,12 +27,12 @@
   </style>
 
   <style name="Widget.AppBarLayout" parent="Widget.Material3.AppBarLayout">
-    <item name="android:background">?attr/colorSurface</item>
+    <item name="android:background">?attr/colorSurfaceVariant</item>
     <item name="android:elevation">?attr/toolbarElevation</item>
   </style>
 
   <style name="Widget.Toolbar" parent="Widget.Material3.Toolbar">
-    <item name="android:background">?attr/colorSurface</item>
+    <item name="android:background">?attr/colorSurfaceVariant</item>
     <item name="android:elevation">?attr/toolbarElevation</item>
     <item name="android:minHeight">?attr/actionBarSize</item>
     <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
