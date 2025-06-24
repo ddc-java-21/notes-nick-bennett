@@ -22,7 +22,7 @@ public class DatabaseModule {
   @Singleton
   NotesDatabase provideDatabase(@ApplicationContext Context context, Preloader preloader) {
     return Room.databaseBuilder(context, NotesDatabase.class, NotesDatabase.getName())
-        .addCallback(preloader)
+//        .addCallback(preloader)
         .build();
   }
 

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupNavigation() {
+    setSupportActionBar(binding.topAppBar);
     appBarConfig = new AppBarConfiguration.Builder(
         R.id.pre_login_fragment, R.id.login_fragment, R.id.list_fragment)
         .build();
