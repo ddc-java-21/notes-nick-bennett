@@ -9,13 +9,14 @@
 
   <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    app:liftOnScroll="true">
 
     <com.google.android.material.appbar.MaterialToolbar
       android:id="@+id/top_app_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:minHeight="?attr/actionBarSize"
       app:title="@string/app_name"/>
 
   </com.google.android.material.appbar.AppBarLayout>

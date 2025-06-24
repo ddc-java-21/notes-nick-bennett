@@ -21,6 +21,31 @@
     <item name="colorCancel">@color/cancel</item>
     <item name="colorSave">@color/ok</item>
     <item name="colorEdit">@color/edit</item>
+    <item name="appBarLayoutStyle">@style/Widget.AppBarLayout</item>
+    <item name="toolbarStyle">@style/Widget.Toolbar</item>
+    <item name="toolbarElevation">@dimen/toolbar_elevation</item>
+  </style>
+
+  <style name="Widget.AppBarLayout" parent="Widget.Material3.AppBarLayout">
+    <item name="android:background">?attr/colorSurface</item>
+    <item name="android:elevation">?attr/toolbarElevation</item>
+  </style>
+
+  <style name="Widget.Toolbar" parent="Widget.Material3.Toolbar">
+    <item name="android:background">?attr/colorSurface</item>
+    <item name="android:elevation">?attr/toolbarElevation</item>
+    <item name="android:minHeight">?attr/actionBarSize</item>
+    <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
+    <item name="subtitleTextAppearance">@style/TextAppearance.Toolbar.Subtitle</item>
+    <item name="navigationIconTint">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="TextAppearance.Toolbar.Title" parent="TextAppearance.Material3.TitleLarge">
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="TextAppearance.Toolbar.Subtitle" parent="TextAppearance.Material3.BodySmall">
+    <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
   </style>
 
   <style name="ListItemTitle" parent="TextAppearance.Material3.TitleMedium">

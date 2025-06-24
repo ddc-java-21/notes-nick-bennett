@@ -4,4 +4,7 @@
   <dimen name="half_static_spacing">4dp</dimen>
   <dimen name="edit_button_size">48dp</dimen>
   <dimen name="thumbnail_list_height">112dp</dimen>
+  <dimen name="note_card_radius">4dp</dimen>
+  <dimen name="note_card_elevation">2dp</dimen>
+  <dimen name="toolbar_elevation">8dp</dimen>
 </resources>

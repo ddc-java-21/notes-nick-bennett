@@ -3,4 +3,5 @@
   <attr name="colorCancel" format="color|reference"/>
   <attr name="colorSave" format="color|reference"/>
   <attr name="colorEdit" format="color|reference"/>
+  <attr name="toolbarElevation" format="dimension|reference"/>
 </resources>

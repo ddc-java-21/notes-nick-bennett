@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.notes.controller;
 
 import android.os.Bundle;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void setupUI() {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
+    EdgeToEdge.enable(this);
     setContentView(binding.getRoot());
   }
 
